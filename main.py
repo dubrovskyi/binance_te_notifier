@@ -17,7 +17,14 @@ async def send_message(message):
 
 
 # defining key/request url
-async def main(pair='HFTUSDT', dist=0.1, timeout=10):
+async def main(pair='HFTUSDT', dist=0.1, timeout=10) -> None:
+    """
+    Binance notifier with symbol pair to Telegram by dist and timeout
+    :param pair: str symbol value by which pair need to check on Binance price
+    :param dist: float value when need to notify if previous value changed on
+    :param timeout: how frequently need to ping binance server
+    :return: None
+    """
     price_for_notification = 0
     while True:
         key = f"https://api.binance.com/api/v3/ticker/price?symbol={pair}"
