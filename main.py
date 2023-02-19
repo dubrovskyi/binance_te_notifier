@@ -9,6 +9,7 @@ import requests
 
 chat_id = os.getenv('CHAT_ID', '')
 bot_token = os.getenv('BOT_TOKEN', '')
+connection_error_timeout = int(os.getenv('ERROR_TIMEOUT', 600))
 
 
 async def send_message(message):
@@ -50,4 +51,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
     except requests.exceptions.ConnectionError:
-        time.sleep(6000)
+        time.sleep(connection_error_timeout)
