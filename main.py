@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 import time
@@ -10,6 +11,7 @@ import requests
 chat_id = os.getenv('CHAT_ID', '')
 bot_token = os.getenv('BOT_TOKEN', '')
 connection_error_timeout = int(os.getenv('ERROR_TIMEOUT', 600))
+logger = logging.getLogger(__name__)
 
 
 async def send_message(message):
@@ -36,7 +38,7 @@ async def main(pair='HFTUSDT', dist=0.1, timeout=10) -> None:
         if value := float(data['price']):
             if (price_for_notification + float(dist)) < value:
                 price_for_notification = value
-                await send_message(f'{pair} \U0001F4B9 {price_for_notification}')
+                await send_message(f'{pair} \U0001F53B {price_for_notification}')
             elif (price_for_notification - float(dist)) > value:
                 price_for_notification = value
                 await send_message(f'{pair} \U0001F53B {price_for_notification}')
@@ -51,4 +53,5 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
     except requests.exceptions.ConnectionError:
+        logger.info('ConnectionError appeared')
         time.sleep(connection_error_timeout)
