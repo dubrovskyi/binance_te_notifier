@@ -17,7 +17,7 @@ async def send_message(message):
 
 
 # defining key/request url
-async def main(pair='HFTUSDT'):
+async def main(pair='HFTUSDT', dist=0.1, timeout=10):
     price_for_notification = 0
     while True:
         key = f"https://api.binance.com/api/v3/ticker/price?symbol={pair}"
@@ -26,13 +26,13 @@ async def main(pair='HFTUSDT'):
         data = requests.get(key)
         data = data.json()
         if value := float(data['price']):
-            if (price_for_notification + 0.01) < value:
+            if (price_for_notification + float(dist)) < value:
                 price_for_notification = value
                 await send_message(f'UP {price_for_notification}')
-            elif (price_for_notification - 0.01) > value:
+            elif (price_for_notification - float(dist)) > value:
                 price_for_notification = value
                 await send_message(f'DOWN {price_for_notification}')
-        sleep(10)
+        sleep(int(timeout))
 
 
 if __name__ == '__main__':
