@@ -28,6 +28,7 @@ async def main(pair='HFTUSDT') -> None:
     :param timeout: how frequently need to ping binance server
     :return: None
     """
+    price_for_notification = 0
     while True:
         try:
             key = f"https://api.binance.com/api/v3/ticker/price?symbol={pair}"
@@ -36,13 +37,13 @@ async def main(pair='HFTUSDT') -> None:
             data = requests.get(key)
             data = data.json()
             if value := float(data['price']):
-                # if (price_for_notification + 0.05) < value:
-                if value > 0.9:
-                    # price_for_notification = value
+                if (price_for_notification + 0.01) <= value:
+                # if value > 0.9:
+                    price_for_notification = value
                     await send_message(f'{pair} \U0001F4B9 {value}')
-                # elif (price_for_notification - 0.05) > value:
-                elif value < 0.7:
-                    # price_for_notification = value
+                elif (price_for_notification - 0.01) >= value:
+                # elif value < 0.7:
+                    price_for_notification = value
                     await send_message(f'{pair} \U0001F53B {value}')
             sleep(60)
 
