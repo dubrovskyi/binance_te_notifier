@@ -38,7 +38,7 @@ async def main(pair='HFTUSDT', dist=0.1, timeout=10) -> None:
         if value := float(data['price']):
             if (price_for_notification + float(dist)) < value:
                 price_for_notification = value
-                await send_message(f'{pair} \U0001F53B {price_for_notification}')
+                await send_message(f'{pair} \U0001F4B9 {price_for_notification}')
             elif (price_for_notification - float(dist)) > value:
                 price_for_notification = value
                 await send_message(f'{pair} \U0001F53B {price_for_notification}')
