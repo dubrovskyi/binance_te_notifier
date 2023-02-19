@@ -44,7 +44,7 @@ async def main(pair='HFTUSDT') -> None:
                 elif value < 0.7:
                     # price_for_notification = value
                     await send_message(f'{pair} \U0001F53B {value}')
-            sleep(10)
+            sleep(60)
 
         except Exception:
             logger.info('ConnectionError appeared')
