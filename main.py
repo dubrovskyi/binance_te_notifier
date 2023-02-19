@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 from time import sleep
 import asyncio
@@ -16,10 +17,10 @@ async def send_message(message):
 
 
 # defining key/request url
-async def main():
+async def main(pair='HFTUSDT'):
     price_for_notification = 0
     while True:
-        key = "https://api.binance.com/api/v3/ticker/price?symbol=HFTUSDT"
+        key = f"https://api.binance.com/api/v3/ticker/price?symbol={pair}"
 
         # requesting data from url
         data = requests.get(key)
@@ -38,7 +39,7 @@ if __name__ == '__main__':
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     try:
-        asyncio.run(main())
+        asyncio.run(main(sys.argv[1] if len(sys.argv) > 1 else 'HFTUSDT'))
     except KeyboardInterrupt:
         pass
     except requests.exceptions.ConnectionError:
