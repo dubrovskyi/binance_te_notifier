@@ -25,7 +25,6 @@ def check_symbol_price(symbol):
     return float(data['price'])
 
 
-# defining key/request url
 async def main(pair='HFTUSDT') -> None:
     """
     Binance notifier with symbol pair to Telegram by dist and timeout
